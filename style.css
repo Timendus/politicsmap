@@ -1,0 +1,65 @@
+html, body, #map {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#map {
+  position: relative;
+}
+
+#controls, #parties, #axes, #heatmap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#controls { z-index: 150; }
+#parties  { z-index: 100; }
+#axes     { z-index: 50;  }
+#heatmap  { z-index: 1;   }
+
+/* Vertical axis */
+#axes:before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: darkgrey;
+}
+
+/* Horizontal axis */
+#axes:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: darkgrey;
+}
+
+.party {
+  position: absolute;
+  width: 500px;
+  margin-top: -0.6em;
+  margin-left: -250px;
+  text-align: center;
+  color: white;
+  font: 2em Tahoma;
+  cursor: default;
+}
+
+#controls {
+  text-align: right;
+  padding: 1em;
+}
+#controls select {
+  font: 1.2em Tahoma;
+}
