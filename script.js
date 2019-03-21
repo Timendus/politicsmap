@@ -140,7 +140,7 @@ window.addEventListener('load', function() {
 
   // Make political parties draggable
   interact('.party').draggable({
-    inertia: true,
+    inertia: false,
     onmove: function(event) {
       var target = event.target,
           x      = (parseFloat(target.style.left) || 0) + event.dx,
