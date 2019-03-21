@@ -95,7 +95,7 @@ window.addEventListener('load', function() {
       // for gradient color customization
       '0': 'black',
       '.2': 'blue',
-      '.75': 'red',
+      '.6': 'red',
       '1': 'white'
     },
     // the maximum opacity (the value with the highest intensity will have it)

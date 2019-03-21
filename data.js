@@ -99,20 +99,18 @@ window.politicalData = {
   ],
   eersteKamer: {
     2019: {
-      CDA: 8,
+      CDA: 9,
       SGP: 1,
       CU: 4,
       VVD: 12,
-      'D66': 7,
+      'D66': 6,
       PvdA: 7,
-      GL: 8,
+      GL: 9,
       SP: 4,
-      OSF: 1,
       PvdD: 3,
-      '50+': 3,
-      PVV: 6,
-      DENK: 1,
-      FVD: 10
+      '50+': 2,
+      PVV: 5,
+      FVD: 13
     },
     2015: {
       CDA: 12,
