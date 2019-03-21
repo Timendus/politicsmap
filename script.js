@@ -134,7 +134,7 @@ window.addEventListener('load', function() {
       return party.label == target.innerText;
     });
     localStorage.setItem(target.innerText,
-      parseFloat(target.style.left) + "," + parseFloat(target.style.top));
+      parseInt(target.style.left) + "," + parseInt(target.style.top));
     renderHeatmap(window.politicalData[window.type][window.year]);
   };
 
