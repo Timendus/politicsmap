@@ -70,14 +70,15 @@ window.addEventListener('load', function() {
     // required container
     container: document.querySelector('#heatmap'),
     // backgroundColor to cover transparent areas
-    backgroundColor: 'rgba(0,0,0,.95)',
+    backgroundColor: 'rgba(0,0,0,1)',
     // custom gradient colors
     gradient: {
       // enter n keys between 0 and 1 here
       // for gradient color customization
-      '.5': 'blue',
-      '.8': 'red',
-      '.95': 'white'
+      '0': 'black',
+      '.2': 'blue',
+      '.75': 'red',
+      '1': 'white'
     },
     // the maximum opacity (the value with the highest intensity will have it)
     maxOpacity: .9,
