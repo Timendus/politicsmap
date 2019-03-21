@@ -113,6 +113,8 @@ window.addEventListener('load', function() {
   document.querySelector('#type').addEventListener('change', function() {
     window.type = document.querySelector('#type').value;
     renderControls(window.politicalData[window.type]);
+    window.year = Object.keys(window.politicalData[window.type])[0];
+    renderHeatmap(window.politicalData[window.type][window.year]);
   });
 
   document.querySelector('#year').addEventListener('change', function() {
