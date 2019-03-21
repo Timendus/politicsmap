@@ -140,7 +140,7 @@ window.addEventListener('load', function() {
 
   // Make political parties draggable
   interact('.party').draggable({
-    inertia: false,
+    inertia: true,
     onmove: function(event) {
       var target = event.target,
           x      = (parseFloat(target.style.left) || 0) + event.dx,
@@ -150,7 +150,9 @@ window.addEventListener('load', function() {
       target.style.left = x + "px";
       target.style.top  = y + "px";
 
-      updateHeatmapOnDrag(event);
+      if ( window.innerWidth > 1024) {
+        updateHeatmapOnDrag(event);
+      }
     },
     onend: updateHeatmapOnDrag
   })
