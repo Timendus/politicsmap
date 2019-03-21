@@ -7,6 +7,7 @@ function mapYToScreen(y) {
 
 function renderHeatmap(data) {
   var points = [];
+  var max = 0;
   Object.keys(data).forEach(function(label) {
     var party = window.politicalData['parties'].find(function(party) {
       return party.label == label;
@@ -15,12 +16,13 @@ function renderHeatmap(data) {
       value: data[label],
       x:     mapXToScreen(party.x),
       y:     mapYToScreen(party.y)
-    })
+    });
+    max = max < data[label] ? data[label] : max;
   });
 
   // heatmap data format
   var data = {
-    max: 13,
+    max: max,
     data: points
   };
 
@@ -43,11 +45,27 @@ function renderLabels(data) {
   });
 }
 
-function renderControls() {
-
+function renderControls(data) {
+  var selector = document.querySelector('#year');
+  selector.innerHTML = '';
+  Object.keys(data).forEach(function(year) {
+    var elm = document.createElement('option');
+    elm.innerText = year;
+    elm.value = year;
+    selector.appendChild(elm);
+  });
 }
 
+window.addEventListener('resize', function() {
+  renderHeatmap(window.politicalData['eersteKamer'][2003]);
+  renderLabels(window.politicalData['parties']);
+});
+
 window.addEventListener('load', function() {
+  // Start here:
+  window.type = 'eersteKamer';
+  window.year = 2003;
+
   window.heatmapInstance = h337.create({
     // required container
     container: document.querySelector('#heatmap'),
@@ -69,16 +87,17 @@ window.addEventListener('load', function() {
     radius: window.innerHeight / 3
   });
 
-  renderHeatmap(window.politicalData['eersteKamer'][2015]);
+  renderHeatmap(window.politicalData[window.type][window.year]);
   renderLabels(window.politicalData['parties']);
+  renderControls(window.politicalData[window.type]);
+
+  document.querySelector('#type').addEventListener('change', function() {
+    window.type = document.querySelector('#type').value;
+    renderControls(window.politicalData[window.type]);
+  });
 
   document.querySelector('#year').addEventListener('change', function() {
-    var year = document.querySelector('#year').value;
-    renderHeatmap(window.politicalData['eersteKamer'][year]);
+    window.year = document.querySelector('#year').value;
+    renderHeatmap(window.politicalData[window.type][window.year]);
   });
-});
-
-window.addEventListener('resize', function() {
-  renderHeatmap(window.politicalData['eersteKamer'][2015]);
-  renderLabels(window.politicalData['parties']);
 });
