@@ -47,20 +47,21 @@ html, body, #map {
 
 .party {
   position: absolute;
-  width: 500px;
+  width: 200px;
   margin-top: -0.6em;
-  margin-left: -250px;
+  margin-left: -100px;
   text-align: center;
   color: white;
   font: 2em Tahoma;
-  cursor: default;
   text-shadow: 0px 0px 10px rgba(0,0,0,0.4);
 }
 
 #controls {
   text-align: right;
   padding: 1em;
+  pointer-events: none;
 }
-#controls select {
+#controls select, #controls button {
   font: 1.2em Tahoma;
+  pointer-events: auto;
 }

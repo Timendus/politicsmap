@@ -12,10 +12,20 @@ function renderHeatmap(data) {
     var party = window.politicalData['parties'].find(function(party) {
       return party.label == label;
     });
+    var screenPos = localStorage.getItem(label);
+    var x,y;
+    if(screenPos) {
+      screenPos = screenPos.split(',');
+      x = screenPos[0];
+      y = screenPos[1];
+    } else {
+      x = mapXToScreen(party.x);
+      y = mapYToScreen(party.y);
+    }
     points.push({
       value: data[label],
-      x:     mapXToScreen(party.x),
-      y:     mapYToScreen(party.y)
+      x:     x,
+      y:     y
     });
     max = max < data[label] ? data[label] : max;
   });
@@ -35,8 +45,16 @@ function renderLabels(data) {
 
   data.forEach(function(point) {
     var elm = document.createElement('div');
-    var x = mapXToScreen(point.x);
-    var y = mapYToScreen(point.y);
+    var screenPos = localStorage.getItem(point.label);
+    var x,y;
+    if(screenPos) {
+      screenPos = screenPos.split(',');
+      x = screenPos[0];
+      y = screenPos[1];
+    } else {
+      x = mapXToScreen(point.x);
+      y = mapYToScreen(point.y);
+    }
     elm.innerText = point.label;
     elm.className = 'party';
     elm.style = "left: "+x+"px; top: "+y+"px;";
@@ -85,7 +103,7 @@ window.addEventListener('load', function() {
     // minimum opacity. any value > 0 will produce
     // no transparent gradient transition
     minOpacity: .3,
-    radius: window.innerHeight / 3
+    radius: (window.innerHeight + window.innerWidth) / 6
   });
 
   renderHeatmap(window.politicalData[window.type][window.year]);
@@ -101,4 +119,37 @@ window.addEventListener('load', function() {
     window.year = document.querySelector('#year').value;
     renderHeatmap(window.politicalData[window.type][window.year]);
   });
+
+  document.querySelector('#reset').addEventListener('click', function() {
+    localStorage.clear();
+    renderHeatmap(window.politicalData[window.type][window.year]);
+    renderLabels(window.politicalData['parties']);
+  });
+
+  var updateHeatmapOnDrag = function(event) {
+    var target = event.target;
+    var party = window.politicalData['parties'].find(function(party) {
+      return party.label == target.innerText;
+    });
+    localStorage.setItem(target.innerText,
+      parseFloat(target.style.left) + "," + parseFloat(target.style.top));
+    renderHeatmap(window.politicalData[window.type][window.year]);
+  };
+
+  // Make political parties draggable
+  interact('.party').draggable({
+    inertia: true,
+    onmove: function(event) {
+      var target = event.target,
+          x      = (parseFloat(target.style.left) || 0) + event.dx,
+          y      = (parseFloat(target.style.top) || 0) + event.dy;
+
+      // translate the element
+      target.style.left = x + "px";
+      target.style.top  = y + "px";
+
+      updateHeatmapOnDrag(event);
+    },
+    onend: updateHeatmapOnDrag
+  })
 });
